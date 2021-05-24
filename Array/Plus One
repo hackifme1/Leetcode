@@ -1,0 +1,76 @@
+// By Chandramani Kumar
+// Keep moving and must be simple bro!!!!!
+// Espérons le meilleur mais préparez-vous au pire 😎
+
+Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.
+
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.
+
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+ 
+
+Example 1:
+
+Input: digits = [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+Example 2:
+
+Input: digits = [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.
+Example 3:
+
+Input: digits = [0]
+Output: [1]
+ 
+
+Constraints:
+
+1 <= digits.length <= 100
+0 <= digits[i] <= 9
+
+Cpp code :
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int l,i,j,k,m;
+        l=digits.size();
+        j=0;
+        for(i=0;i<l;i++)
+        {
+            if(digits[i]==9)
+            {
+                j++;
+                m=i;
+            }
+            else
+                j=0;
+        }
+        if(j==l)
+        {
+            digits[0]=1;
+            for(i=1;i<l;i++)
+                digits[i]=0;
+            
+            digits.emplace_back(0);
+        }
+        
+        else if(j<l&&j>0&&m==(l-1))
+        {
+            
+            k=l-j;
+            k=k-1;
+            digits[k]+=1;
+            for(i=(k+1);i<l;i++)
+                digits[i]=0;
+        }
+        else
+        {
+            digits[l-1]+=1;
+        }
+        return digits;
+    }
+};
