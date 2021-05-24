@@ -1,0 +1,75 @@
+// By Chandramani Kumar
+// Keep moving and must be simple bro!!!!!
+// Espérons le meilleur mais préparez-vous au pire 😎
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(head==NULL)
+            return NULL;
+        vector<int> v,v1;
+        
+        ListNode* temp=head;
+        
+        while(temp)
+        {
+            v.push_back(temp->val);
+            temp=temp->next;
+        }
+        
+        int sz=v.size(),cnt=0,j;
+         if(sz==1)
+            return head;
+        
+       
+        //v1.push_back(v[0]);
+        int i;
+        int f=v[0];
+        if(v[0]!=v[1])
+            v1.push_back(v[0]);
+        for(i=2;i<sz;i++)
+        {
+            // if(v[i]!=v[i-1])
+            //     f=0;
+            if(v[i]!=v[i-1])
+            {
+                if(v[i-1]!=f)
+                v1.push_back(v[i-1]);                
+            }
+         else
+             f=v[i];
+            
+        }
+        if(v[sz-1]!=v[sz-2])
+            v1.push_back(v[sz-1]);
+        
+        if(v1.size()==0)
+            return NULL;
+        ListNode* nwnode=new ListNode();
+        nwnode->val=v1[0];
+        nwnode->next=NULL;
+        head=nwnode;
+        int sz1=v1.size();
+        for(i=1;i<sz1;i++)
+        {
+            ListNode* newnode=new ListNode();
+            newnode->val = v1[i];
+            newnode->next=NULL;
+            nwnode->next=newnode;
+            nwnode=newnode;
+        }
+        
+        return head;
+    }
+};
