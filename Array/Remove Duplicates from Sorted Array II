@@ -1,0 +1,57 @@
+// By Chandramani Kumar
+// Keep moving and must be simple bro!!!!!
+// Espérons le meilleur mais préparez-vous au pire 😎
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n=nums.size(),i;
+        int cnt=0;
+        int j=0;
+        for(i=0;i<n;i++)
+        {
+            int m=nums[i];
+            if(i==0){
+              int ub=upper_bound(nums.begin(),nums.end(),nums[i])-nums.begin();
+                if(ub>2)
+                {
+                    cnt=cnt+2;   
+                    for(int k=0;k<2;k++)
+                        nums[j++]=m;
+                }
+                else
+                {
+                    cnt+=ub;
+                    for(int k=0;k<ub;k++)
+                        nums[j++]=m;
+                }
+            }
+            else
+            {
+                if(nums[i]==nums[i-1])
+                    continue;
+                else
+                {
+                    int lb=lower_bound(nums.begin(),nums.end(),nums[i])-nums.begin();
+                   int ub=upper_bound(nums.begin(),nums.end(),nums[i])-nums.begin();
+                    int diff=ub-lb;
+                    if(diff>2)
+                    {
+                        cnt=cnt+2;
+                        for(int k=0;k<2;k++)
+                        {
+                            nums[j++]=m;
+                        }
+                    }
+                     else
+                  {
+                    cnt+=diff;
+                    for(int k=0;k<diff;k++)
+                        nums[j++]=m;
+                  }
+                }
+            }
+        }
+        return cnt;
+    }
+};
