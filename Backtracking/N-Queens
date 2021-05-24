@@ -1,0 +1,66 @@
+// By Chandramani Kumar
+// Keep moving and must be simple bro!!!!!
+// Espérons le meilleur mais préparez-vous au pire 😎
+
+
+class Solution {
+        unordered_map<int,int> d,rd;
+public:
+    void solve(vector<vector<int>> &ans,int n,int row,vector<bool> c,vector<int> vec)
+  {
+      if(row==n)
+      {
+          ans.push_back(vec);
+          return;
+      }
+      
+      for(int i=0;i<n;i++)
+      {
+          if(c[i]==false&&d[row+i]==0&&rd[row-i+n-1]==0)
+          {
+              vec.push_back(i+1);
+              c[i]=true;
+              d[row+i]=1;
+              rd[row-i+n-1]=1;
+              solve(ans,n,row+1,c,vec);
+              vec.pop_back();
+              c[i]=false;
+              d[row+i]=0;
+              rd[row-i+n-1]=0;
+          }
+      }
+  }
+    
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<int>> res;
+        vector<vector<string>> res1;       
+        
+        vector<bool> col(n,false);
+      
+        solve(res,n,0,col,{});
+        string s="";
+        for(int i=0;i<n;i++)
+            s=s+'.';
+        
+        for(int i=0;i<res.size();i++)
+        {
+            vector<string> str;
+            for(int j=0;j<n;j++)
+            {
+                str.push_back(s);
+            }
+            res1.push_back(str);
+        }
+        
+         for(int i=0;i<res.size();i++)
+        {
+            for(int j=0;j<res[i].size();j++)
+            {
+                res1[i][j][res[i][j]-1]='Q';
+            }       
+        }
+        return res1;
+    
+
+    }
+};
