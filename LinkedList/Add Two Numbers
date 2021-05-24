@@ -1,0 +1,87 @@
+// By Chandramani Kumar
+// Keep moving and must be simple bro!!!
+// Espérons le meilleur mais préparez-vous au pire 😎
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector<int> v1;
+        vector<int> v2;
+        vector<int> v3;
+        int i,j;
+        
+        ListNode* temp1=l1;
+        ListNode* temp2=l2;
+        
+        while(temp1)
+        {
+            v1.push_back(temp1->val);
+            temp1=temp1->next;
+        }
+        
+         while(temp2)
+        {
+            v2.push_back(temp2->val);
+            temp2=temp2->next;
+        }
+           
+        int minm=min(v1.size(),v2.size());
+        int carr=0;
+        for(i=0;i<minm;i++)
+        {
+            int s=v1[i]+v2[i]+carr;;
+            int r=s%10;
+             carr=s/10;
+            v3.push_back(r);
+        }
+         if(v1.size()<v2.size())
+         {
+             for(j=i;j<v2.size();j++)
+             {
+                    int s=v2[j]+carr;
+                    int r=s%10;
+                     carr=s/10;
+                    v3.push_back(r);
+             }
+         }
+        if(v1.size()>v2.size())
+        {
+             for(j=i;j<v1.size();j++)
+             {
+                    int s=v1[j]+carr;
+                    int r=s%10;
+                    carr=s/10;
+                    v3.push_back(r);
+             }
+        }
+        if(carr!=0)
+            v3.push_back(carr);
+        
+        ListNode* head=NULL;
+        ListNode* nwnode=new ListNode();
+        nwnode->val=v3[0];
+        nwnode->next=NULL;
+        head=nwnode;
+        
+        for(i=1;i<v3.size();i++)
+        {
+            ListNode* newnode=new ListNode();
+            newnode->val=v3[i];
+            newnode->next=NULL;
+            nwnode->next=newnode;
+            nwnode=newnode;
+        }
+        
+        return head;
+    }
+};
