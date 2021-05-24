@@ -1,0 +1,75 @@
+// By Chandramani Kumar
+// Keep moving and must be simple bro!!!!!
+// Espérons le meilleur mais préparez-vous au pire 😎
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        if(head==NULL)
+            return NULL;
+        ListNode *temp=head;
+        vector<int> l,r;
+        int f=0;
+        while(temp)
+        {
+            if(temp->val<x)
+            l.push_back(temp->val);
+            else
+            r.push_back(temp->val);
+
+            temp=temp->next;
+        }
+        
+         ListNode *temp1=NULL;
+        ListNode *head1=NULL;
+       
+        if(l.size()>0){
+             ListNode *nw=new ListNode();
+        nw->val=l[0];
+          nw->next=NULL;
+        temp1=nw;
+         head1=temp1;
+        }
+       else{
+           ListNode *nw=new ListNode();
+        nw->val=r[0];
+          nw->next=NULL;
+        temp1=nw;
+         head1=temp1;
+           f=1;
+       }
+      for(int i=1;i<l.size();i++)
+      {
+          ListNode *nw=new ListNode();
+          nw->val=l[i];
+          nw->next=NULL;
+          temp1->next=nw;
+          temp1=nw;
+      }
+        int j;
+      if(f==1){ j=1;}
+        else j=0;
+      for(int i=j;i<r.size();i++)
+      {
+          ListNode *nw=new ListNode();
+          nw->val=r[i];
+          nw->next=NULL;
+          temp1->next=nw;
+          temp1=nw;
+      }
+        
+      head=head1;
+        return head;
+    }
+};
