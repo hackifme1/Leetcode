@@ -27,6 +27,43 @@ Constraints:
 
 Cpp code :
 
+// Two pointer Approach along with hashmap concept
+
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> res;
+        sort(nums1.begin(),nums1.end());
+        sort(nums2.begin(),nums2.end());
+        
+    int flag[1001] = {0};
+    int m = nums1.size();
+    int n = nums2.size();
+    int l = 0, r = 0;
+    
+    while(l<m && r<n)
+    {
+        if(nums1[l]<nums2[r])
+        l++;
+        else if(nums1[l]>nums2[r])
+        r++;
+        else
+        {
+            if(flag[nums1[l]]==0)
+            res.push_back(nums1[l]);
+            flag[nums1[l]] = 1;
+            l++;
+            r++;
+        }
+    }
+    
+    return res;                   
+    }
+};
+
+
+// Binary Search
+
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
