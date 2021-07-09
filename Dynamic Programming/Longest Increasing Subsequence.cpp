@@ -72,3 +72,28 @@ public:
         return maxm;
     }
 };
+
+// O(n*logn) Time Complexity
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> sqn;
+        
+        sqn.push_back(nums[0]);
+        
+        for(int i=1;i<n;i++)
+        {
+            if(sqn.back() < nums[i])
+                sqn.push_back(nums[i]);
+            else
+            {
+                int indx = lower_bound(sqn.begin(),sqn.end(),nums[i]) - sqn.begin();
+                sqn[indx] = nums[i];
+            }
+        }
+        
+        return sqn.size();
+    }
+};
