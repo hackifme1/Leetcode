@@ -41,6 +41,8 @@ All pairs (fromi, toi) are distinct.
 
 Cpp code :
 
+// Simple non reachable node counting approach
+
 class Solution {
 public:    
     vector<int> findSmallestSetOfVertices(int n, vector<vector<int>>& edges) {
@@ -59,6 +61,58 @@ public:
             if(!reachable[i])
                 res.push_back(i);
         }     
+        
+        return res;
+    }
+};
+
+
+// DFS approach
+
+class Solution {
+public:
+    
+    void dfs(vector<int> adj[], map<int,int> &mp, vector<bool> &vis, int node)
+    {
+        vis[node] = true;
+        
+        for(auto ver : adj[node])
+        {
+            if(!vis[ver])
+                dfs(adj, mp, vis, ver);
+            else if(mp[ver] == 1)
+                mp[ver] = 0;                
+        }            
+    }
+    
+    vector<int> findSmallestSetOfVertices(int n, vector<vector<int>>& edges) {
+        int m = edges.size();
+        vector<bool> vis(n, false);
+        vector<int> adj[n];
+        map<int,int> mp;
+        
+        vector<int> res;
+        
+        for(int i=0;i<m;i++)
+        {
+            adj[edges[i][0]].push_back(edges[i][1]);
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+             if(!vis[i])
+             {
+                 dfs(adj, mp, vis, i);
+                 mp[i] = 1;
+             }
+             
+        }
+       
+        for(auto elem : mp)
+        {
+            if(elem.second == 1)
+            res.push_back(elem.first);
+        }
         
         return res;
     }
